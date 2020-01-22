@@ -34,14 +34,14 @@ export default {
         };
       },
       pollInterval() {
-        return this.pollInterval;
+        return this.pollInterval > 0 ? this.pollInterval : null;
       }
     }
   },
   data() {
     return {
       name: "Takashi",
-      pollInterval: 1000
+      pollInterval: 0
     };
   }
 };
