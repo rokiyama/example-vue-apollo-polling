@@ -2,6 +2,14 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <p>{{ hello }}</p>
+    <p>
+      name:
+      <input type="text" v-model="name" />
+    </p>
+    <p>
+      pollInterval:
+      <input type="number" v-model="pollInterval" />
+    </p>
   </div>
 </template>
 
@@ -20,10 +28,21 @@ export default {
           hello(name: $name)
         }
       `,
-      variables: {
-        name: "Taro"
+      variables() {
+        return {
+          name: this.name
+        };
+      },
+      pollInterval() {
+        return this.pollInterval;
       }
     }
+  },
+  data() {
+    return {
+      name: "Takashi",
+      pollInterval: 1000
+    };
   }
 };
 </script>
