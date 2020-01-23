@@ -1,12 +1,23 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link v-for="r in routes" :key="r.path" :to="r.path">{{
+        r.name
+      }}</router-link>
     </div>
     <router-view />
   </div>
 </template>
+
+<script>
+export default {
+  computed: {
+    routes() {
+      return this.$router.options.routes;
+    }
+  }
+};
+</script>
 
 <style>
 #app {
@@ -22,11 +33,12 @@
 }
 
 #nav a {
-  font-weight: bold;
   color: #2c3e50;
+  margin: 5px;
 }
 
 #nav a.router-link-exact-active {
   color: #42b983;
+  font-weight: bolder;
 }
 </style>
