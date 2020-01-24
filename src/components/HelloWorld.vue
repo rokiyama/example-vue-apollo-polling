@@ -8,7 +8,7 @@
     </p>
     <p>
       pollInterval:
-      <input type="number" v-model="pollInterval" />
+      <input type="number" v-model="pollIntervalInput" />
     </p>
   </div>
 </template>
@@ -24,7 +24,7 @@ export default {
   apollo: {
     hello: {
       query: gql`
-        query($name: String) {
+        query hello($name: String) {
           hello(name: $name)
         }
       `,
@@ -33,8 +33,12 @@ export default {
           name: this.name
         };
       },
-      pollInterval() {
-        return this.pollInterval > 0 ? this.pollInterval : null;
+      result(res) {
+        if (this.pollInterval > 0) {
+          this.$apollo.queries.hello.startPolling(this.pollInterval);
+        } else {
+          this.$apollo.queries.hello.stopPolling();
+        }
       }
     }
   },
@@ -43,6 +47,19 @@ export default {
       name: "Takashi",
       pollInterval: 0
     };
+  },
+  computed: {
+    pollIntervalInput: {
+      get() {
+        return this.pollInterval;
+      },
+      set(newValue) {
+        if (newValue > 0) {
+          this.$apollo.queries.hello.startPolling(newValue);
+        }
+        this.pollInterval = newValue;
+      }
+    }
   }
 };
 </script>
